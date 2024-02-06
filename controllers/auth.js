@@ -28,18 +28,18 @@ const registration = async (req, res) => {
            password_message: "Пожалуйста, укажите пароль" 
         })
     }
-    // if (req_password.trim().length < 8) {
-    //     return res.json({
-    //         password_message: "Пароль должен содержать 8 или более символов и состоять из цифр, и букв на латинице" 
+    if (req_password.trim().length < 8) {
+        return res.json({
+            password_message: "Пароль должен содержать 8 или более символов и состоять из цифр, и букв на латинице" 
           
-    //     })
-    // }
-    // let pattern = /^(?=\d*[a-zA-Z])(?=\D*\d)[a-zA-Z0-9]+$/
-    //     if (req_password.match(pattern)===null) {
-    //     return res.json({
-    //         password_message: "Пароль должен содержать 8 или более символов и состоять из цифр, и букв на латинице" 
-    //     })
-    // }
+        })
+    }
+    let pattern = /^(?=\d*[a-zA-Z])(?=\D*\d)[a-zA-Z0-9]+$/
+        if (req_password.match(pattern)===null) {
+        return res.json({
+            password_message: "Пароль должен содержать 8 или более символов и состоять из цифр, и букв на латинице" 
+        })
+    }
     
     try {
         const { email, password } = req.body

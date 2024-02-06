@@ -1,5 +1,6 @@
 const Book = require("../models/book")
 const fs = require('fs')
+const { host } = require("../utils/paths")
 
 const getBooks = async (req, res) => {
     try {
@@ -25,7 +26,6 @@ const getBook = async (req, res) => {
         const errors = {};
 
         if (!req.body.title) {
-          console.log('Image !!!!')
           errors.title = { message: "Пожалуйста, укажите название книги" };
         }
         if (req.body.title.length > 300) {
@@ -48,7 +48,6 @@ const getBook = async (req, res) => {
 
           if (isBookUnique) {
             fs.unlinkSync(`./assets/${req.file.filename}`)
-            console.log('img removed / ' + req.file.filename)
               return res.json({
                 bookUnique: 'Книга с таким названием уже есть. Дайте другое название книге. Например: "Гензель и Гретель. Авторы: Братья Гримм. Перевод П.Н.Полевой"',
               })
@@ -57,7 +56,7 @@ const getBook = async (req, res) => {
             title,
             description,
             content,
-            bookImage: `http://localhost:${process.env.PORT}/static/${req.file.filename}`,
+            bookImage: `${host}/static/${req.file.filename}`,
             userId,
             notes
           })
@@ -105,7 +104,7 @@ const updateBook = async (req, res) => {
             title,
             description,
             content,
-            bookImage: `http://localhost:${process.env.PORT}/static/${req.file.filename}`,
+            bookImage: `${host}/static/${req.file.filename}`,
             userId,
             notes,
           });
@@ -123,7 +122,7 @@ const updateBook = async (req, res) => {
 const deleteBook = async (req, res) => {
   try {
     const book = await Book.findOneAndDelete({ _id: req.params.id })
-    const imagePath = book.bookImage.split('http://localhost:8000/static/')[1]
+    const imagePath = book.bookImage.split(`${host}/static/`)[1]
     fs.unlinkSync(`./assets/${imagePath}`)
     console.log('title book removed / ' + book.title)
     res.json({

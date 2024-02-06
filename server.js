@@ -5,6 +5,10 @@ const mongoose = require("mongoose")
 const port = process.env.PORT || 8000
 const mongouri = process.env.MONGO_URL || ""
 
+const { host } = require("./utils/paths")
+const cors = require('cors')
+const corsOptions = require('./config/corsOptions')
+
 const books = require('./routes/books')
 const users = require('./routes/users')
 const audioFiles = require('./routes/audiofiles')
@@ -18,9 +22,9 @@ async function start() {
                 useUnifiedTopology: true,
             }
         );
-        app.listen(port, () => {
+        app.listen(host, () => {
             console.log(
-                `mongoose.connect + Сервер запущен! -  http://localhost:${port}`
+                `mongoose.connect + Сервер запущен! - ${host}`
             );
         });
     } catch (err) {
@@ -29,6 +33,7 @@ async function start() {
 }("strictQuery", false)
 start()
 
+app.use(cors(corsOptions))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
 app.use("/static", express.static(__dirname + "/assets"))
