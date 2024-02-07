@@ -6,8 +6,6 @@ const port = process.env.PORT || 8000
 const mongouri = process.env.MONGO_URL || ""
 
 const cors = require('cors')
-// const corsOptions = require('./config/corsOptions')
-// const { host } = require("./utils/paths")
 const books = require('./routes/books')
 const users = require('./routes/users')
 const audioFiles = require('./routes/audiofiles')
