@@ -37,6 +37,9 @@ const getBook = async (req, res) => {
         if (!req.body.content) {
           errors.content = { message: "Пожалуйста, введите текст книги" };
         }
+        if (!req.body.bookImage) {
+          errors.bookImage = { message: "Пожалуйста, загрузите изображение" };
+        }
         if (Object.keys(errors).length > 0) {
           fs.unlinkSync(`./assets/${req.file.filename}`)
           console.log('img removed / ' + req.file.filename)
