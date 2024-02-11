@@ -134,7 +134,7 @@ const getMe = async (req, res) => {
             process.env.JWT_SECRET,
             { expiresIn: '2d' },
         )
-
+        console.log('Куки - '+req.headers.cookie)
         res.json({
             user,
             token,

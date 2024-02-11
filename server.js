@@ -31,7 +31,8 @@ async function start() {
 start()
 
 app.use(cors({
-    origin: ["https://hopnextgames-front.onrender.com", "http://localhost:3000"]
+    origin: ["https://hopnextgames-front.onrender.com"],
+    credentials: true
     }))
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }));
